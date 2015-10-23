@@ -15,6 +15,7 @@ public class SwipeActivity extends FragmentActivity {
         viewpager = (ViewPager) findViewById(R.id.pager);
         PagerAdapter padapter = new PagerAdapter(getSupportFragmentManager());
         viewpager.setAdapter(padapter);
+        viewpager.setCurrentItem(1);
     }
 
 
