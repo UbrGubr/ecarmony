@@ -1,8 +1,10 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+       <!-- <item name="android:windowNoTitle">true</item> -->
+        <!-- No need for Action Bar since we are using Toolbar instead -->
+        <!-- <item name="android:windowActionBar">false</item> -->
     </style>
 
 </resources>
