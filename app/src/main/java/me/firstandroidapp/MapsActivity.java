@@ -10,19 +10,41 @@ import android.util.Log;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.Drive;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MapsActivity extends FragmentActivity implements
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        LocationListener {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     public static final String TAG = MapsActivity.class.getSimpleName();
+    // JSON containing rider locations to display on the map
+    private static final String SERVICE_URL = "https://raw.githubusercontent.com/UbrGubr/ecarmony/master/rider_locations";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +52,20 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
 
-        // Build API client that gives us access to LocationServices
+        // Build API object that gives us access to LocationServices
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+
+        // Create a LocationRequest object for requesting location updates
+        mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(10 * 10000)        // 10 seconds (in milliseconds)
+                .setFastestInterval(1 * 1000);  // 1 second (in milliseconds)
+
+
     }
 
     @Override
@@ -49,6 +79,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
     protected void onPause() {
         super.onPause();
         if(mGoogleApiClient.isConnected()) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             mGoogleApiClient.disconnect();
         }
     }
@@ -89,16 +120,83 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
      */
     private void setUpMap() {
         mMap.setMyLocationEnabled(true);
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(38.5746112, -121.4090140), 14.0f));
+        // Retrieve the ride locations from JSON file in web service
+        // In a worker thread since it's a network operation
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    retrieveAndAddRiders();
+                } catch (IOException e) {
+                    Log.e(TAG, "Cannot retrieve riders", e);
+                    return;
+                }
+            }
+        }).start();
+    }
+
+    protected void retrieveAndAddRiders() throws IOException {
+        HttpURLConnection conn = null;
+        final StringBuilder json = new StringBuilder();
+        // Connect to web service
+        try {
+            URL url = new URL(SERVICE_URL);
+            conn = (HttpURLConnection) url.openConnection();
+            InputStreamReader in = new InputStreamReader(conn.getInputStream());
+
+            // Read JSON data into StringBuilder
+            int read;
+            char[] buff = new char[1024];
+            while((read=in.read(buff)) != -1) {
+                json.append(buff, 0, read);
+            }
+        } catch (IOException e) {
+            Log.e(TAG, "Error connecting to service", e);
+            throw new IOException("Error connecting to service", e);
+        } finally {
+            if(conn != null) {
+                conn.disconnect();
+            }
+        }
+        
+        // Create markers for the rider data 
+        // Must run this on the UI thread since it's a UI operation 
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    createMarkersFromJson(json.toString());
+                } catch (JSONException e) {
+                    Log.e(TAG, "Error processing JSON", e);
+                }
+            }
+        });
+    }
+
+    void createMarkersFromJson(String json) throws JSONException {
+        //De-serialize the JSON string into an array of city objects
+        JSONArray jsonArray = new JSONArray(json);
+        for(int i=0; i<jsonArray.length(); i++) {
+            //Create a marker for each ride in JSON data
+            JSONObject jsonObj = jsonArray.getJSONObject(i);
+            mMap.addMarker(new MarkerOptions()
+                .title(jsonObj.getString("name"))
+                .position(new LatLng(
+                        jsonObj.getDouble("lat"),
+                        jsonObj.getDouble("long")
+                    ))
+                );
+        }
     }
 
     @Override
     public void onConnected(Bundle bundle) {
         Log.i(TAG, "Location services connected.");
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+
         //getLastLocation can throw null pointer exception if google play services has not discovered location yet
         if(location == null){
-            Log.i(TAG, "locaion is null");
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
         else {
             handleNewLocation(location);
@@ -113,7 +211,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
 
         MarkerOptions options = new MarkerOptions()
                 .position(latLng)
-                .title("I am here!");
+                .title("You are here!");
         mMap.addMarker(options);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14.0f));
     }
@@ -150,5 +248,10 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
              */
             Log.i(TAG, "Location services connection failed with code " + connectionResult.getErrorCode());
         }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        handleNewLocation(location);
     }
 }
