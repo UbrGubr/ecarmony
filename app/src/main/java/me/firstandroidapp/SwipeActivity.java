@@ -1,11 +1,14 @@
 package me.firstandroidapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 public class SwipeActivity extends AppCompatActivity {
@@ -19,8 +22,9 @@ public class SwipeActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("RideShare");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        //toolbar.setNavigationIcon(R.id.
+
 
         ViewPager viewpager = (ViewPager) findViewById(R.id.pager);
         viewpagerAdapter = new PagerAdapter(getSupportFragmentManager());
@@ -29,13 +33,23 @@ public class SwipeActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_swipe, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.gmap_button:
-                return true;
+                Intent intent = new Intent(this, MapsActivity.class);
+                this.startActivity(intent);
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
+        return true;
     }
 
 

@@ -2,9 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-       <!-- <item name="android:windowNoTitle">true</item> -->
-        <!-- No need for Action Bar since we are using Toolbar instead -->
-        <!-- <item name="android:windowActionBar">false</item> -->
+        <!-- We are using Toolbar instead of default Action Bar, see toolbar_layout.xml -->
     </style>
 
 </resources>
