@@ -1,6 +1,8 @@
 package me.firstandroidapp;
 
 import android.content.Intent;
+import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -45,6 +47,9 @@ public class SwipeActivity extends AppCompatActivity {
             case R.id.gmap_button:
                 Intent intent = new Intent(this, MapsActivity.class);
                 this.startActivity(intent);
+                //final Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("http://maps.google.com/maps?saddr=1673 Rose Lane Placerville&daddr=Sacramento State University&waypoints=Intel Folsom"));
+                //intent.setClassName("com.google.android.apps.maps","com.google.android.maps.MapsActivity");
+                //startActivity(intent);
                 break;
             default:
                 return super.onOptionsItemSelected(item);
