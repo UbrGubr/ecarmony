@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ListView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="#21AB13"
+android:background="#21AB13"
+android:id="@android:id/list"
+android:textColor="#FFFFFFFF"
     >
-</RelativeLayout>
+</ListView>
