@@ -35,7 +35,7 @@ public class DriverProfileFragment extends android.support.v4.app.ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.driver_profile_layout, container, false);
+      //  View view = inflater.inflate(R.layout.driver_profile_layout, container, false);
 
         View rootView = inflater.inflate(R.layout.driver_profile_layout, container,
                 false);
