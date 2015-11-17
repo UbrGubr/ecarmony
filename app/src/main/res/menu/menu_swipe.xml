@@ -11,4 +11,14 @@
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         app:showAsAction="never"/>
+
+    <item android:id="@+id/action_search"
+        android:title="Search"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_signOut"
+        android:title="Sign out"
+        app:showAsAction="never"/>
+
+
 </menu>
