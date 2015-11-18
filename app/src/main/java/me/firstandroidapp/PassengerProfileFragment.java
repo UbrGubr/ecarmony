@@ -46,8 +46,8 @@ public class PassengerProfileFragment extends android.support.v4.app.ListFragmen
                 "From: 10/17, 3 passengers, 3:00 PM","From: 10/18, 2 passengers, 5:30 PM",
                 "From: 10/19, 3 passengers, 3:00 PM","From: 10/20, 2 passengers, 5:30 PM"
         };
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, values);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                R.layout.text_view_layout, values);
         setListAdapter(adapter);
         return rootView;
         //return view;
