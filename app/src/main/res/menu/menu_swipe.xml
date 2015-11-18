@@ -5,7 +5,7 @@
 
     <item android:id="@+id/gmap_button"
         android:icon="@android:drawable/ic_menu_mylocation"
-        android:title="Map"
+        android:title="@string/action_map"
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/action_settings"
@@ -13,11 +13,11 @@
         app:showAsAction="never"/>
 
     <item android:id="@+id/action_search"
-        android:title="Search"
+        android:title="@string/action_search"
         app:showAsAction="never"/>
 
     <item android:id="@+id/action_signOut"
-        android:title="Sign out"
+        android:title="@string/action_sign_out"
         app:showAsAction="never"/>
 
 

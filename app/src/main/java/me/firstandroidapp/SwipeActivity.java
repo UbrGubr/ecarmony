@@ -24,7 +24,7 @@ public class SwipeActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("RideShare");
+        getSupportActionBar().setTitle(getString(R.string.toolbar_title));
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
