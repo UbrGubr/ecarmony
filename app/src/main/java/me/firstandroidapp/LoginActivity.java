@@ -238,6 +238,7 @@ public class LoginActivity extends AppCompatActivity {
             if (success) {
                 loginIntent.setAction(SWIPE_ACTIVITY);
                 startActivity(loginIntent);
+                finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
