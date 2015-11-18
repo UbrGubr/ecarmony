@@ -16,7 +16,6 @@ import android.view.MenuItem;
 public class SwipeActivity extends AppCompatActivity {
     FragmentPagerAdapter viewpagerAdapter;
     Toolbar toolbar;
-    static final String SIGN_OUT = "android.intent.action.MAIN";
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -48,9 +47,9 @@ public class SwipeActivity extends AppCompatActivity {
             case R.id.gmap_button:
                 //Intent intent = new Intent(this, MapsActivity.class);
                 //this.startActivity(intent);
-                final Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("http://maps.google.com/maps?saddr=Sacramento State University&daddr=Sacramento State University"));
-                intent.setClassName("com.google.android.apps.maps","com.google.android.maps.MapsActivity");
-                startActivity(intent);
+                final Intent openMapIntent = new Intent(Intent.ACTION_VIEW,Uri.parse("http://maps.google.com/maps?saddr=Sacramento State University&daddr=Sacramento State University"));
+                openMapIntent.setClassName("com.google.android.apps.maps","com.google.android.maps.MapsActivity");
+                startActivity(openMapIntent);
                 break;
             case R.id.action_signOut:
                 //Intent intent = new Intent(this, LoginActivity.class);
