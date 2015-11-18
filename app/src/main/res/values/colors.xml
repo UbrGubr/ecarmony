@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white_text">#FFFFFF</color>
+    <color name="driver_background">#3C1E90</color>
+    <color name="passenger_background">#21AB13</color>
+</resources>

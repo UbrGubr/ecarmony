@@ -45,7 +45,7 @@ public class DriverProfileFragment extends android.support.v4.app.ListFragment {
                 "From: 10/19, 3 riders, 3:00 PM","From: 10/20, 2 riders, 5:30 PM"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, values);
+                R.layout.text_view_layout, values);
         setListAdapter(adapter);
         return rootView;
     }
