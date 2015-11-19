@@ -1,21 +1,29 @@
 package me.firstandroidapp;
 
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.io.IOException;
+
 public class SwipeActivity extends AppCompatActivity {
     FragmentPagerAdapter viewpagerAdapter;
     Toolbar toolbar;
+    private static final String TAG = SwipeActivity.class.getSimpleName();
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -45,15 +53,22 @@ public class SwipeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.gmap_button:
+                // Call MapsActivity - a Google Maps API implementation without navigation
                 //Intent intent = new Intent(this, MapsActivity.class);
-                //this.startActivity(intent);
-                final Intent openMapIntent = new Intent(Intent.ACTION_VIEW,Uri.parse("http://maps.google.com/maps?saddr=Sacramento State University&daddr=Sacramento State University"));
-                openMapIntent.setClassName("com.google.android.apps.maps","com.google.android.maps.MapsActivity");
-                startActivity(openMapIntent);
+                //this.startActivity(intent);   // Call MapsActivity - a Google Maps API implementation without navigation
+                final AlertDialog.Builder adb = new AlertDialog.Builder(this);
+                try {
+                    final Intent openMapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=Sacramento State University&daddr=Sacramento State University"));
+                    openMapIntent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+                    startActivity(openMapIntent);   // Call built-in Google Maps App - full navigation support without ability to customize
+                } catch (ActivityNotFoundException e) {
+                    AlertDialog alert = adb.create();
+                    alert.setMessage("Google Maps must be installed on this device.");
+                    alert.show();
+                    Log.e(TAG, "Google Maps is not installed.", e);
+                }
                 break;
             case R.id.action_signOut:
-                //Intent intent = new Intent(this, LoginActivity.class);
-                //this.startActivity(intent);
                 final Intent signOutIntent = new Intent(this, LoginActivity.class);
                 startActivity(signOutIntent);
                 this.finish();
@@ -97,6 +112,20 @@ public class SwipeActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position){
             return "Page" + position;
+        }
+    }
+
+    public void launchMapIntent() throws IOException {
+        try {
+            final Intent openMapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=Sacramento State University&daddr=Sacramento State University"));
+            openMapIntent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+            startActivity(openMapIntent);   // Call built-in Google Maps App - full navigation support without ability to customize
+        } catch (ExceptionInInitializerError e) {
+            Log.e(TAG, "Google Maps is not installed.", e);
+            throw new ExceptionInInitializerError("Google Maps must be installed on this device.");
+        }
+        finally {
+            this.finish();
         }
     }
 }
