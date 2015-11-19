@@ -35,7 +35,6 @@ public class SwipeActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(getString(R.string.toolbar_title));
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-
         ViewPager viewpager = (ViewPager) findViewById(R.id.pager);
         viewpagerAdapter = new PagerAdapter(getSupportFragmentManager());
         viewpager.setAdapter(viewpagerAdapter);
@@ -65,7 +64,7 @@ public class SwipeActivity extends AppCompatActivity {
                     AlertDialog alert = adb.create();
                     alert.setMessage("Google Maps must be installed on this device.");
                     alert.show();
-                    Log.e(TAG, "Google Maps is not installed.", e);
+                    Log.e(TAG, "This action requires Google Maps application to be installed on the device", e);
                 }
                 break;
             case R.id.action_signOut:
