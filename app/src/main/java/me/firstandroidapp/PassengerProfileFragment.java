@@ -7,6 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.List;
+import me.firstandroidapp.HeaderTextArrayAdapter.Item;
+import me.firstandroidapp.HeaderTextArrayAdapter.Header;
+import me.firstandroidapp.HeaderTextArrayAdapter.ListItem;
 
 
 /**
@@ -37,17 +42,21 @@ public class PassengerProfileFragment extends android.support.v4.app.ListFragmen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.passenger_profile_layout, container, false);
 
-        //View rootView = inflater.inflate(R.layout.passenger_profile_layout, container, false);
+        List<Item> items = new ArrayList<Item>();
+        items.add(new Header("To"));
+        items.add(new ListItem("10/17 - 10:00AM", "3 passengers"));
+        items.add(new ListItem("10/18 - 11:30 AM", "1 passenger"));
+        items.add(new ListItem("10/19 - 10:00 AM", "3 passengers"));
+        items.add(new ListItem("10/20 - 11:30 AM", "1 passenger"));
+        items.add(new Header("From"));
+        items.add(new ListItem("10/17 - 3:00 PM", "3 passengers"));
+        items.add(new ListItem("10/18 - 5:30 PM", "2 passengers"));
+        items.add(new ListItem("10/19 - 3:00 PM", "3 passengers"));
+        items.add(new ListItem("10/20 - 5:30 PM", "2 passengers"));
 
-        String[] values = new String[] {
-                "To: 10/17, 3 passengers, 10:00 AM","To: 10/18, 1 passenger, 11:30 AM",
-                "To: 10/19, 3 passengers, 10:00 AM","To: 10/20, 1 passenger, 11:30 AM",
-                "From: 10/17, 3 passengers, 3:00 PM","From: 10/18, 2 passengers, 5:30 PM",
-                "From: 10/19, 3 passengers, 3:00 PM","From: 10/20, 2 passengers, 5:30 PM"
-        };
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                R.layout.text_view_layout, R.id.text_view, values);
+        HeaderTextArrayAdapter adapter = new HeaderTextArrayAdapter(getActivity(), items);
         setListAdapter(adapter);
+
         return view;
     }
 }
