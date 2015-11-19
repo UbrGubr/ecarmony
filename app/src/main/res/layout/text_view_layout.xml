@@ -1,28 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/date_text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="5dip"
+        android:paddingBottom="1dip"
+        android:paddingTop="1dip"
         android:textColor="@color/white_text"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:gravity="center_vertical"
-        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-        android:minHeight="?android:attr/listPreferredItemHeightSmall"
-        android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-        android:paddingRight="?android:attr/listPreferredItemPaddingRight" />
+        android:gravity="center"
+        android:textSize="17sp"
+        android:textStyle="bold" />
 
-    <Button
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/riders_text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingBottom="1dip"
+        android:paddingTop="1dip"
+        android:paddingLeft="20dip"
+        android:textColor="@color/white_text"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:textSize="17sp"
+        android:layout_alignTop="@+id/date_text"
+        android:layout_toRightOf="@+id/date_text"
+        android:layout_toEndOf="@+id/date_text" />
+
+    <ImageButton
         android:id="@+id/details_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="5dp"
-        android:text="@string/details" />
+        android:paddingRight="20dp"
+        android:src="@android:drawable/ic_menu_info_details"
+        android:background="@null"
+        android:layout_alignParentRight="true"/>
 
 </RelativeLayout>
