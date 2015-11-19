@@ -37,8 +37,7 @@ public class PassengerProfileFragment extends android.support.v4.app.ListFragmen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.passenger_profile_layout, container, false);
 
-        View rootView = inflater.inflate(R.layout.passenger_profile_layout, container,
-                false);
+        //View rootView = inflater.inflate(R.layout.passenger_profile_layout, container, false);
 
         String[] values = new String[] {
                 "To: 10/17, 3 passengers, 10:00 AM","To: 10/18, 1 passenger, 11:30 AM",
@@ -47,9 +46,8 @@ public class PassengerProfileFragment extends android.support.v4.app.ListFragmen
                 "From: 10/19, 3 passengers, 3:00 PM","From: 10/20, 2 passengers, 5:30 PM"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                R.layout.text_view_layout, values);
+                R.layout.text_view_layout, R.id.text_view, values);
         setListAdapter(adapter);
-        return rootView;
-        //return view;
+        return view;
     }
 }
