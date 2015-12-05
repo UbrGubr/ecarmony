@@ -1,13 +1,8 @@
 package me.firstandroidapp;
 
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -16,16 +11,20 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
 
-import com.google.android.gms.maps.model.LatLng;
-
-import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SwipeActivity extends AppCompatActivity {
     FragmentPagerAdapter viewpagerAdapter;
@@ -75,6 +74,16 @@ public class SwipeActivity extends AppCompatActivity {
                     alert.show();
                     Log.e(TAG, "This action requires Google Maps application to be installed on the device", e);
                 }
+                String firstName = "Han";
+                String lastName = "Solo";
+                String profileName = "TheSmuggler";
+                String password = "chewie";
+                HashMap<String, String> hmap = new HashMap<>();
+                hmap.put("username", profileName);
+                hmap.put("password", password);
+                hmap.put("user_first_name", firstName);
+                hmap.put("user_last_name", lastName);
+                performPostCall("athena.ecs.csus.edu", hmap);
                 break;
             case R.id.action_signOut:
                 final Intent signOutIntent = new Intent(this, LoginActivity.class);
@@ -123,7 +132,62 @@ public class SwipeActivity extends AppCompatActivity {
         }
     }
 
-    //public void onLocationChanged(Location location){
+    public String performPostCall(String requestURL, HashMap<String,String> postDataParams){
+        URL url;
+        String response = "";
+        try {
+            url = new URL(requestURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(15000);
+            conn.setConnectTimeout(15000);
+            conn.setRequestMethod("POST");
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
 
-    //}
+            OutputStream os = conn.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            writer.write(getPostDataString(postDataParams));
+
+            writer.flush();
+            writer.close();
+            os.close();
+            int responseCode = conn.getResponseCode();
+
+            if(responseCode == HttpURLConnection.HTTP_OK) {
+                String line;
+                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                while((line = br.readLine()) != null) {
+                    response += line;
+                }
+            }
+            else {
+                response = "";
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return response;
+    }
+
+    private String getPostDataString(HashMap<String, String> params) {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+        for(Map.Entry<String, String> entry : params.entrySet()) {
+            if (first)
+                first = false;
+            else
+                result.append("&");
+
+            try {
+                result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+                result.append("=");
+                result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return result.toString();
+    }
 }
