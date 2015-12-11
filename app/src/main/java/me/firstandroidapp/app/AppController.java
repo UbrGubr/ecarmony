@@ -1,4 +1,4 @@
-package me.firstandroidapp;
+package me.firstandroidapp.app;
 
 import android.app.Application;
 import android.content.Context;
@@ -11,9 +11,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 /**
- * Created by PJ on 12/4/2015.
+ * Created by gowthamandroiddeveloperlogin Chandrasekar on 04-09-2015.
  */
 public class AppController extends Application {
+
     public static final String TAG = AppController.class.getSimpleName();
     private static AppController mInstance;
     private RequestQueue mRequestQueue;
@@ -22,16 +23,24 @@ public class AppController extends Application {
         return mInstance;
     }
 
-    // Write string to preference file
+    /*
+    function to write string to preference file
+     */
     public static void setString(Context context, String key, String value) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+
+        SharedPreferences sp = PreferenceManager
+                .getDefaultSharedPreferences(context);
         //apply commit
         sp.edit().putString(key, value).apply();
     }
 
-    // function to get the data written to preference file
-    public static String getString(Context context, String key){
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+    /*
+    function to get the data written to preference file
+     */
+    public static String getString(Context context, String key) {
+
+        SharedPreferences sp = PreferenceManager
+                .getDefaultSharedPreferences(context);
         return sp.getString(key, "");
     }
 
@@ -42,9 +51,10 @@ public class AppController extends Application {
     }
 
     public RequestQueue getRequestQueue() {
-        if(mRequestQueue == null) {
+        if (mRequestQueue == null) {
             mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         }
+
         return mRequestQueue;
     }
 
@@ -58,9 +68,10 @@ public class AppController extends Application {
         getRequestQueue().add(req);
     }
 
-    public void cancelPendingRequest(Object tag) {
-        if(mRequestQueue != null) {
+    public void cancelPendingRequests(Object tag) {
+        if (mRequestQueue != null) {
             mRequestQueue.cancelAll(tag);
         }
     }
+
 }

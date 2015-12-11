@@ -26,10 +26,13 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import me.firstandroidapp.app.SessionManager;
+
 public class SwipeActivity extends AppCompatActivity {
     FragmentPagerAdapter viewpagerAdapter;
     Toolbar toolbar;
     private static final String TAG = SwipeActivity.class.getSimpleName();
+    private SessionManager session;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -40,6 +43,8 @@ public class SwipeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.toolbar_title));
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        session = new SessionManager(getApplicationContext());
 
         ViewPager viewpager = (ViewPager) findViewById(R.id.pager);
         viewpagerAdapter = new PagerAdapter(getSupportFragmentManager());
@@ -74,21 +79,12 @@ public class SwipeActivity extends AppCompatActivity {
                     alert.show();
                     Log.e(TAG, "This action requires Google Maps application to be installed on the device", e);
                 }
-                String firstName = "Han";
-                String lastName = "Solo";
-                String profileName = "TheSmuggler";
-                String password = "chewie";
-                HashMap<String, String> hmap = new HashMap<>();
-                hmap.put("username", profileName);
-                hmap.put("password", password);
-                hmap.put("user_first_name", firstName);
-                hmap.put("user_last_name", lastName);
-                performPostCall("athena.ecs.csus.edu", hmap);
                 break;
             case R.id.action_signOut:
-                final Intent signOutIntent = new Intent(this, LoginActivity.class);
-                startActivity(signOutIntent);
-                this.finish();
+                session.setLogin(false);
+                final Intent intent = new Intent(SwipeActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
                 break;
             default:
                 return super.onOptionsItemSelected(item);

@@ -1,24 +1,23 @@
-package me.firstandroidapp;
+package me.firstandroidapp.app;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.pm.PackageInstaller;
 
 /**
- * Created by PJ on 12/4/2015.
+ * Created by gowthamandroiddeveloperlogin Chandrasekar on 04-09-2015.
  */
 public class SessionManager {
-    // shared preferences file name
+    // Shared preferences file name
     private static final String PREF_NAME = "AndroidSources";
     private static final String KEY_IS_LOGGEDIN = "isLoggedIn";
 
-    //shared prefs
+    // Shared Preferences
     SharedPreferences pref;
     Editor editor;
     Context _context;
 
-    // Shared preference mode
+    // Shared pref mode
     int PRIVATE_MODE = 0;
 
     public SessionManager(Context context) {
@@ -28,8 +27,9 @@ public class SessionManager {
     }
 
     public void setLogin(boolean isLoggedIn) {
+
         editor.putBoolean(KEY_IS_LOGGEDIN, isLoggedIn);
-        //commit changed
+        // commit changes
         editor.commit();
     }
 
