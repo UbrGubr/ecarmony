@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ListView
+
+<LinearLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Find passengers"
+        android:textSize="16sp"
+        android:id="@+id/search_riders"
+        android:background="@color/driver_background"
+        android:textColor="#000000" />
+
+    <ListView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/driver_background"
-    android:id="@android:id/list" >
-</ListView>
+    android:id="@android:id/list"/>
 
+</LinearLayout>

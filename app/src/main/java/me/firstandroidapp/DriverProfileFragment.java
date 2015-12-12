@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+
 import java.util.ArrayList;
 import java.util.List;
 import me.firstandroidapp.HeaderTextArrayAdapter.Item;
@@ -17,11 +20,11 @@ import me.firstandroidapp.HeaderTextArrayAdapter.ListItem;
 /**
  * Created by pjjimiso on 10/20/2015.
  */
-public class DriverProfileFragment extends android.support.v4.app.ListFragment {
+public class DriverProfileFragment extends android.support.v4.app.ListFragment implements View.OnClickListener {
     private String title;
     private int page;
 
-
+    Button searchRiders;
 
     public static DriverProfileFragment newInstance(int page, String title){
         DriverProfileFragment driverFragment = new DriverProfileFragment();
@@ -37,6 +40,12 @@ public class DriverProfileFragment extends android.support.v4.app.ListFragment {
         super.onCreate(savedInstanceState);
         page = getArguments().getInt("3", 0);
         title = getArguments().getString("Driver");
+
+        if(this.getView() != null) {
+            searchRiders = (Button) getView().findViewById(R.id.search_riders);
+        }
+
+        searchRiders.setOnClickListener(this);
     }
 
     @Override
@@ -60,5 +69,14 @@ public class DriverProfileFragment extends android.support.v4.app.ListFragment {
         setListAdapter(adapter);
 
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.search_riders:
+                //start popup activity
+                break;
+        }
     }
 }

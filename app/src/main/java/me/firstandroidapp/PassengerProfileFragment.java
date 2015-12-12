@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,8 @@ public class PassengerProfileFragment extends android.support.v4.app.ListFragmen
     private String title;
     private int page;
 
+    Button searchDrivers;
+
     public static PassengerProfileFragment newInstance(int page, String title){
         PassengerProfileFragment passengerFragment = new PassengerProfileFragment();
         Bundle args = new Bundle();
@@ -36,6 +39,10 @@ public class PassengerProfileFragment extends android.support.v4.app.ListFragmen
         super.onCreate(savedInstanceState);
         page = getArguments().getInt("1", 0);
         title = getArguments().getString("Passenger");
+
+        if(this.getView() != null) {
+            searchDrivers = (Button) getView().findViewById(R.id.search_drivers);
+        }
     }
 
     @Override

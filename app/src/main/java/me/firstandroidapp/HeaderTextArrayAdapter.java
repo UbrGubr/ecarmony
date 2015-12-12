@@ -1,6 +1,7 @@
 package me.firstandroidapp;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,11 @@ public class HeaderTextArrayAdapter extends ArrayAdapter<Item> {
 
     public HeaderTextArrayAdapter(Context context, List<Item> items) {
         super(context, 0, items);
+        mInflater = LayoutInflater.from(context);
+    }
+
+    public HeaderTextArrayAdapter(Context context, int resource, List<Item> items) {
+        super(context, resource, items);
         mInflater = LayoutInflater.from(context);
     }
 
