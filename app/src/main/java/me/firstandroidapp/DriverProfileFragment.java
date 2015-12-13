@@ -1,6 +1,7 @@
 package me.firstandroidapp;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -40,18 +41,15 @@ public class DriverProfileFragment extends android.support.v4.app.ListFragment i
         super.onCreate(savedInstanceState);
         page = getArguments().getInt("3", 0);
         title = getArguments().getString("Driver");
-
-        if(this.getView() != null) {
-            searchRiders = (Button) getView().findViewById(R.id.search_riders);
-        }
-
-        searchRiders.setOnClickListener(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.driver_profile_layout, container,
                 false);
+
+        searchRiders = (Button) view.findViewById(R.id.search_riders);
+        searchRiders.setOnClickListener(this);
 
         List<Item> items = new ArrayList<Item>();
         items.add(new Header("To"));
@@ -75,7 +73,9 @@ public class DriverProfileFragment extends android.support.v4.app.ListFragment i
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.search_riders:
-                //start popup activity
+                Intent intent = new Intent(getActivity(),
+                        ScheduleActivity.class);
+                startActivity(intent);
                 break;
         }
     }

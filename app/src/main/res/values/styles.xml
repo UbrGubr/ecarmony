@@ -5,4 +5,9 @@
         <!-- We are using Toolbar instead of default Action Bar, see toolbar_layout.xml -->
     </style>
 
+    <style name="AppTheme.ScheduleCustomTheme" >
+        <item name="android:windowIsTranslucent"> true</item>
+        <item name="android:windowCloseOnTouchOutside"> true</item>
+    </style>
+
 </resources>
