@@ -64,8 +64,9 @@ public class SwipeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.gmap_button:
                 // Call MapsActivity - a Google Maps API implementation without navigation
-                //Intent intent = new Intent(this, MapsActivity.class);
-                //this.startActivity(intent);   // Call MapsActivity - a Google Maps API implementation without navigation
+                Intent mapsIntent = new Intent(this, MapsActivity.class);
+                this.startActivity(mapsIntent);   // Call MapsActivity - a Google Maps API implementation without navigation
+                /*
                 final AlertDialog.Builder adb = new AlertDialog.Builder(this);
 
                 try {
@@ -79,11 +80,12 @@ public class SwipeActivity extends AppCompatActivity {
                     alert.show();
                     Log.e(TAG, "This action requires Google Maps application to be installed on the device", e);
                 }
+                */
                 break;
             case R.id.action_signOut:
                 session.setLogin(false);
-                final Intent intent = new Intent(SwipeActivity.this, LoginActivity.class);
-                startActivity(intent);
+                final Intent soIntent = new Intent(SwipeActivity.this, LoginActivity.class);
+                startActivity(soIntent);
                 finish();
                 break;
             default:

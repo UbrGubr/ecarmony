@@ -72,6 +72,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
                 .setInterval(10 * 10000)        // 10 seconds (in milliseconds)
                 .setFastestInterval(1 * 1000);  // 1 second (in milliseconds)
 
+        /*
         // Initialize array of markers
         markerPoints = new ArrayList<LatLng>();
         // Getting reference to Button
@@ -97,11 +98,10 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
                 // Setting the position of the marker
                 options.position(point);
 
-                /**
-                 * For the start location, the color of marker is GREEN and
-                 * for the end location, the color of marker is RED and
-                 * for the rest of markers, the color is AZURE
-                 */
+                 // For the start location, the color of marker is GREEN and
+                 // for the end location, the color of marker is RED and
+                 // for the rest of markers, the color is AZURE
+
                 if (markerPoints.size() == 1) {
                     options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                 } else if (markerPoints.size() == 2) {
@@ -114,8 +114,10 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
                 mMap.addMarker(options);
             }
         });
+        */
 
         // The map will be cleared on long click
+        /*
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
 
             @Override
@@ -127,10 +129,10 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
                 markerPoints.clear();
             }
         });
-
+        */
         // Click event handler for Button btn_draw
-        btnDraw.setOnClickListener(new View.OnClickListener() {
-
+        //btnDraw.setOnClickListener(new View.OnClickListener() {
+        /*
             @Override
             public void onClick(View v) {
                 // Checks, whether start and end locations are captured
@@ -148,6 +150,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
                 }
             }
         });
+        */
     }
 
     @Override
