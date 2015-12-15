@@ -92,13 +92,22 @@
     </LinearLayout>
 
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I'm over 18 years old"
+        android:id="@+id/age_limit"
+        android:layout_gravity="center_horizontal"
+        android:checked="false" />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Register"
         android:textSize="18sp"
         android:id="@+id/register_button"
-        android:background="#30996A"
+        android:clickable="false"
+        android:background="@color/register_button_disabled"
         android:layout_marginTop="40dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"

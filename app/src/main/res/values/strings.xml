@@ -28,4 +28,7 @@
     <string name="details">Details</string>
     <string name="title_activity_schedule">ScheduleActivity</string>
 
+    <!-- Strings related to schedule -->
+    <string name="time_default">12:00 AM</string>
+
 </resources>

@@ -3,4 +3,6 @@
     <color name="white_text">#FFFFFF</color>
     <color name="driver_background">#1889DB</color>
     <color name="passenger_background">#30996A</color>
+    <color name="register_button_enabled">#30996A</color>
+    <color name="register_button_disabled">#999999</color>
 </resources>

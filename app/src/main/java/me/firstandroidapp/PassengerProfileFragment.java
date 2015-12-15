@@ -1,6 +1,7 @@
 package me.firstandroidapp;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,7 @@ import me.firstandroidapp.HeaderTextArrayAdapter.ListItem;
 /**
  * Created by pjjimiso on 10/20/2015.
  */
-public class PassengerProfileFragment extends android.support.v4.app.ListFragment {
+public class PassengerProfileFragment extends android.support.v4.app.ListFragment implements View.OnClickListener {
 
     private String title;
     private int page;
@@ -39,15 +40,14 @@ public class PassengerProfileFragment extends android.support.v4.app.ListFragmen
         super.onCreate(savedInstanceState);
         page = getArguments().getInt("1", 0);
         title = getArguments().getString("Passenger");
-
-        if(this.getView() != null) {
-            searchDrivers = (Button) getView().findViewById(R.id.search_drivers);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.passenger_profile_layout, container, false);
+
+        searchDrivers = (Button) view.findViewById(R.id.search_riders);
+        searchDrivers.setOnClickListener(this);
 
         List<Item> items = new ArrayList<Item>();
         items.add(new Header("To"));
@@ -65,5 +65,16 @@ public class PassengerProfileFragment extends android.support.v4.app.ListFragmen
         setListAdapter(adapter);
 
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.search_riders:
+                Intent intent = new Intent(getActivity(),
+                        ScheduleActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 }
